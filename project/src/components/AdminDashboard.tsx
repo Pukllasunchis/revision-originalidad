@@ -111,27 +111,34 @@ export default function AdminDashboard() {
     }
   };
 
-  const downloadFile = async (bucket: string, path: string, filename: string) => {
-    try {
-      const { data, error } = await supabase.storage
-        .from(bucket)
-        .download(path);
+  const downloadFile = async (bucket: string, path: string, filename?: string) => {
+  try {
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .download(path);
 
-      if (error) throw error;
+    if (error) throw error;
 
-      const url = URL.createObjectURL(data);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error downloading file:', error);
-      alert('Error al descargar el archivo');
-    }
-  };
+    const url = URL.createObjectURL(data);
+
+    const a = document.createElement('a');
+    a.href = url;
+
+    // Obtener nombre real del archivo si no existe
+    const realFileName = filename || path.split('/').pop() || 'archivo';
+
+    a.download = realFileName;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error downloading file:', error);
+    alert('Error al descargar el archivo');
+  }
+};
 
   const deleteRequest = async (requestId: string) => {
     if (!confirm('¿Está seguro de eliminar esta solicitud?')) {
