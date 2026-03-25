@@ -119,21 +119,23 @@ export default function AdminDashboard() {
 
     if (error) throw error;
 
-    const url = URL.createObjectURL(data);
+    // Obtener nombre real
+    const realFileName = path.split('/').pop() || 'archivo';
+
+    // Crear blob con tipo correcto
+    const blob = new Blob([data]);
+    const url = window.URL.createObjectURL(blob);
 
     const a = document.createElement('a');
     a.href = url;
-
-    // Obtener nombre real del archivo si no existe
-    const realFileName = filename || path.split('/').pop() || 'archivo';
-
     a.download = realFileName;
 
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
 
-    URL.revokeObjectURL(url);
+    window.URL.revokeObjectURL(url);
+
   } catch (error) {
     console.error('Error downloading file:', error);
     alert('Error al descargar el archivo');
