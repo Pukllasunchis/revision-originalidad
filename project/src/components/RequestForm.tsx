@@ -26,7 +26,7 @@ export default function RequestForm() {
     studyProgram: '',
     documentType: '',
     reviewNumber: 1,
-    document: null,
+    document: '',
     members: [
       { fullName: '', institutionalEmail: '', phoneNumber: '', paymentReceipt: null },
     ],
