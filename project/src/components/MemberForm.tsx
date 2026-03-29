@@ -101,15 +101,24 @@ export default function MemberForm({
             id={`member-receipt-${index}`}
             required
             accept="image/*,.pdf"
-            onChange={(e) => {
-              const file = e.target.files?.[0] || null;
-              onChange(index, 'paymentReceipt', file);
-            }}
+           onChange={(e) => {
+  const file = e.target.files?.[0] || null;
+
+  if (file && file.size > 50 * 1024 * 1024) {
+    alert('⚠️ El comprobante debe ser menor a 50MB');
+    return;
+  }
+
+  onChange(index, 'paymentReceipt', file);
+}}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
           />
           <p className="mt-1 text-sm text-gray-500">
             Formato: imagen o PDF
           </p>
+                    <p className="mt-1 text-sm text-red-600">
+⚠️ El comprobante de pago debe pesar menos de 50MB
+</p>
           {member.paymentReceipt && (
             <p className="mt-2 text-sm text-green-600">
               Archivo seleccionado: {member.paymentReceipt.name}
