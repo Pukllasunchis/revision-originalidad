@@ -369,17 +369,17 @@ export default function RequestForm() {
             Documento a Revisar <span className="text-red-500">*</span>
           </label>
           <input
-            type="file"
-            id="document"
-            required
-            accept=".pdf,.doc,.docx"
-            onChange={(e) => {
-              const file = e.target.files?.[0] || null;
-              setFormData({ ...formData, document: file });
-            }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-          />
-          <p className="mt-1 text-sm text-gray-500">Formato: PDF o Word</p>
+  type="text"
+  id="document"
+  required
+  placeholder="Pegue aquí el enlace de Google Drive"
+  value={formData.document}
+  onChange={(e) =>
+    setFormData({ ...formData, document: e.target.value })
+  }
+  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+/>
+          <p className="mt-1 text-sm text-gray-500">Pegue el enlace del documento en Google Drive</p>
           {formData.document && (
             <p className="mt-2 text-sm text-green-600 flex items-center">
               <FileText className="w-4 h-4 mr-1" />
