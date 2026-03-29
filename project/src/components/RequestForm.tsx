@@ -75,9 +75,9 @@ export default function RequestForm() {
     setIsSubmitting(true);
 
     try {
-      if (!formData.document) {
-        throw new Error('Debe adjuntar el documento a revisar');
-      }
+      if (!formData.document.trim()) {
+  throw new Error('Debe ingresar el enlace del documento');
+}
 
       const membersWithoutReceipt = formData.members.filter(
         (m) => !m.paymentReceipt
@@ -111,17 +111,7 @@ export default function RequestForm() {
 
       const queueNumber = (currentCount || 0) + 1;
 
-      const timestamp = Date.now();
-      const documentPath = `${timestamp}_${formData.document.name}`;
-      const uploadedDocPath = await uploadFile(
-        formData.document,
-        STORAGE_BUCKETS.DOCUMENTS,
-        documentPath
-      );
-
-      if (!uploadedDocPath) {
-        throw new Error('Error al subir el documento');
-      }
+      const uploadedDocPath = formData.document;
 
       const { data: requestData, error: requestError } = await supabase
         .from('requests')
