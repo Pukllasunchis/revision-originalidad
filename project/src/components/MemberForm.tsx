@@ -106,6 +106,7 @@ export default function MemberForm({
 
   if (file && file.size > 50 * 1024 * 1024) {
     alert('⚠️ El comprobante debe ser menor a 50MB');
+    e.target.value = ''; // ← limpia el input
     return;
   }
 
